@@ -22,7 +22,8 @@ Select * from categories;
 SELECT name FROM categories Where slug='fashion';
 -- Add a data containing the values (id,name,state_id,status,created_at) to the cities table.
 Insert Into cities(id,name,state_id,status,created_at) Values (?,?,?,?,?);
-select * from cities;]]></console>
+select * from cities;
+Delete from cities where id=? and name=?;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

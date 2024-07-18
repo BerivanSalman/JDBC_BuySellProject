@@ -1,8 +1,8 @@
 Feature: DELETE
   Background:
     * The database connection is created.
-
-  Scenario: Delete the data containing the values (id,name,state_id,status,created_at) in the cities table.
+@query03
+  Scenario: Delete the data containing the values (id=?,name=?) in the cities table.
   Verify that it has been deleted.
     * Query03 is prepared and executed.
     * PreparedResultSet03 is processed.

@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import static org.junit.Assert.assertEquals;
+
 public class StepDefinitions {
     QueryManage queryManage = new QueryManage(); //obje olusturduk
     Faker faker = new Faker();
@@ -42,7 +44,7 @@ public class StepDefinitions {
         resultSet.next();
         String actualName = resultSet.getString("name");
         String expectedName = "Fashion";
-        Assert.assertEquals(expectedName,actualName);
+        assertEquals(expectedName,actualName);
     }
     @Given("The database connection is closed.")
     public void the_database_connection_is_closed() {
@@ -70,15 +72,21 @@ public class StepDefinitions {
     }
     @Given("PreparedResultSet02 is processed.")
     public void prepared_result_set02_is_processed() {
-        Assert.assertEquals(1,rowCount);
+        assertEquals(1,rowCount);
     }
     // ------------------QUERY03-DELETE------------------------
     @Given("Query03 is prepared and executed.")
-    public void query03_is_prepared_and_executed() {
-
+    public void query03_is_prepared_and_executed() throws SQLException {
+        query = queryManage.getQuery03();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        preparedStatement.setInt(1,id);
+        preparedStatement.setString(2,name);
+        rowCount = preparedStatement.executeUpdate();
+        System.out.println("Silinen id: "+id+" Silinen name: "+name);
     }
     @Given("PreparedResultSet03 is processed.")
     public void prepared_result_set03_is_processed() {
+     assertEquals(1,rowCount);
 
     }
 }
