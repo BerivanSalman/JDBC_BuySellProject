@@ -26,6 +26,9 @@ public class StepDefinitions {
     int state_id;
     int status;
     String created_at;
+    String email;
+    int query_type;
+    String message;
 
 // ------------------QUERY01-SELECT-----------------------
 
@@ -87,7 +90,39 @@ public class StepDefinitions {
     @Given("PreparedResultSet03 is processed.")
     public void prepared_result_set03_is_processed() {
      assertEquals(1,rowCount);
+    }
+    // ------------------QUERY03-Insert and Update------------------------
+    @Given("Insert values to the contacts table")
+    public void insert_values_to_the_contacts_table() throws SQLException {
+        query = queryManage.getQuery04Insert();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+         id = faker.number().numberBetween(1000,2000);
+        name = faker.name().firstName();
+        String email = faker.internet().emailAddress();
+        int query_type = faker.number().randomDigit();
+        String message = faker.lorem().sentence();
+        preparedStatement.setInt(1,id);
+        preparedStatement.setString(2,name);
+        preparedStatement.setString(3,email);
+        preparedStatement.setInt(4,query_type);
+        preparedStatement.setString(5,message);
+        preparedStatement.executeUpdate();
+        System.out.println(id +" "+name+" "+email+ " "+" "+ query_type+" "+message);
+    }
+    @Given("Update the message content")
+    public void update_the_message_content() throws SQLException {
+        query = queryManage.getQuery04Update();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        String updatedMessage = faker.lorem().sentence();
+        preparedStatement.setString(1,updatedMessage);
+        preparedStatement.setString(2,name);
+        rowCount = preparedStatement.executeUpdate();
+        System.out.println(updatedMessage);
 
+    }
+    @Given("ResultSet is processed")
+    public void result_set_is_processed() {
+        assertEquals(1,rowCount);
     }
 }
 

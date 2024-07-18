@@ -22,7 +22,7 @@ Select * from categories;
 SELECT name FROM categories Where slug='fashion';
 -- Add a data containing the values (id,name,state_id,status,created_at) to the cities table.
 Insert Into cities(id,name,state_id,status,created_at) Values (?,?,?,?,?);
-select * from cities;
+select * from contacts where id = 1243;
 Delete from cities where id=? and name=?;]]></console>
     </connection>
   </component>
