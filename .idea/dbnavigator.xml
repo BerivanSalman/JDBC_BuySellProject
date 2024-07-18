@@ -6,7 +6,7 @@
   </component>
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -19,16 +19,17 @@
     <connection id="5dfe1f83-ac4b-4b57-a2a8-f353f90b1f78">
       <console name="BuySellCycle" type="STANDARD" schema="" session="Main"><![CDATA[-- Verify the name value of a categorie with 'slug = fashion' in the Categories table.
 Select * from categories;
-SELECT name FROM categories Where slug='fashion';]]></console>
+SELECT name FROM categories Where slug='fashion';
+-- Add a data containing the values (id,name,state_id,status,created_at) to the cities table.
+Insert Into cities(id,name,state_id,status,created_at) Values (?,?,?,?,?);
+select * from cities;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="5dfe1f83-ac4b-4b57-a2a8-f353f90b1f78" object-ref="consoles/BuySellCycle" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="5dfe1f83-ac4b-4b57-a2a8-f353f90b1f78" />
