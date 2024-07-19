@@ -31,6 +31,8 @@ public class StepDefinitions {
     String message;
 
 // ------------------QUERY01-SELECT-----------------------
+    // Select sorgusunda bunu kullan; resultSet = JDBCReusableMethods.getStatement().executeQuery(query);
+    // Diğer sorgularda Update, Insert, Delete bunu kullan;  preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
 
     @Given("The database connection is created.")
     public void the_database_connection_is_created() {
@@ -91,16 +93,16 @@ public class StepDefinitions {
     public void prepared_result_set03_is_processed() {
      assertEquals(1,rowCount);
     }
-    // ------------------QUERY03-Insert and Update------------------------
+    // ------------------QUERY04-Insert and Update------------------------
     @Given("Insert values to the contacts table")
     public void insert_values_to_the_contacts_table() throws SQLException {
         query = queryManage.getQuery04Insert();
         preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
          id = faker.number().numberBetween(1000,2000);
         name = faker.name().firstName();
-        String email = faker.internet().emailAddress();
+        email = faker.internet().emailAddress();
         int query_type = faker.number().randomDigit();
-        String message = faker.lorem().sentence();
+        message = faker.lorem().sentence();
         preparedStatement.setInt(1,id);
         preparedStatement.setString(2,name);
         preparedStatement.setString(3,email);
@@ -124,5 +126,48 @@ public class StepDefinitions {
     public void result_set_is_processed() {
         assertEquals(1,rowCount);
     }
-}
+    // ------------------QUERY05-Insert and Delete------------------------
+    @Given("Delete the added data by entering the email information in the contacts table.")
+    public void delete_the_added_data_by_entering_the_email_information_in_the_contacts_table() throws SQLException {
+        query = queryManage.getQuery05();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        preparedStatement.setString(1,email);
+        rowCount = preparedStatement.executeUpdate();
+    }
+    // ------------------QUERY06-Group By------------------------
+    @Given("Query06 is prepared and executed.")
+    public void query06_is_prepared_and_executed() throws SQLException {
+        query =queryManage.getQuery06();
+        resultSet = JDBCReusableMethods.getStatement().executeQuery(query);
+        // Bu adım, queryManage nesnesinden query06 sorgusunu alır ve bu sorguyu çalıştırır. Sonuçlar resultSet nesnesine atanır.
+    }
+    @Given("ResultSet06 is processed.")
+    public void result_set06_is_processed() throws SQLException {
+        while (resultSet. next()) {
+            int couponId = resultSet.getInt("coupon_id");
+            int productCount = resultSet.getInt("product_count");
+            //Her satır için coupon_id ve product_count değerlerini alır ve ekrana yazdırır.
+            System.out.println("Coupon ID: " + couponId + ", Product Count: " + productCount);
+        }
+    }
+    // ------------------QUERY07-Limit------------------------
+    @Given("Query07 is prepared and executed.")
+    public void query07_is_prepared_and_executed() throws SQLException {
+        query = queryManage.getQuery07();
+        resultSet = JDBCReusableMethods.getStatement().executeQuery(query);
+    }
+    @Given("ResultSet07 is processed.")
+    public void result_set07_is_processed() throws SQLException {
+        boolean containsDigit = false;
+        while (resultSet.next())
+        {
+            String phoneNumber = resultSet.getString("phone");
+            if (phoneNumber.contains("5")) {
+                containsDigit = true;
+            }
+            System.out.println("phone: "+ phoneNumber);
+    }
+    }
+    }
+
 
